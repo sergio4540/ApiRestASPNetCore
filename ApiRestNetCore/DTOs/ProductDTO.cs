@@ -16,5 +16,6 @@ namespace ApiRestNetCore.DTOs
         // PROPIEDAD DE NAVEGACIÓN
         [ForeignKey("CategoryId")]
         public Categories? Categories { get; set; }
+        public ICollection<ProductSeller>? ProductSeller { get; set; }
     }
 }

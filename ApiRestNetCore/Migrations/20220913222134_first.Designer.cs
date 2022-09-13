@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiRestNetCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220913213941_first")]
+    [Migration("20220913222134_first")]
     partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -136,6 +136,21 @@ namespace ApiRestNetCore.Migrations
                     b.ToTable("Product");
                 });
 
+            modelBuilder.Entity("ApiRestNetCore.Entidades.ProductSeller", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SellerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "SellerId");
+
+                    b.HasIndex("SellerId");
+
+                    b.ToTable("ProductSeller");
+                });
+
             modelBuilder.Entity("ApiRestNetCore.Entidades.Seller", b =>
                 {
                     b.Property<int>("SellerId")
@@ -148,12 +163,7 @@ namespace ApiRestNetCore.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
                     b.HasKey("SellerId");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("Seller");
                 });
@@ -196,6 +206,8 @@ namespace ApiRestNetCore.Migrations
 
                     b.HasKey("TransactionReportId");
 
+                    b.HasIndex("OrderId");
+
                     b.HasIndex("ProductId");
 
                     b.ToTable("TransactionReports");
@@ -234,15 +246,23 @@ namespace ApiRestNetCore.Migrations
                     b.Navigation("Categories");
                 });
 
-            modelBuilder.Entity("ApiRestNetCore.Entidades.Seller", b =>
+            modelBuilder.Entity("ApiRestNetCore.Entidades.ProductSeller", b =>
                 {
-                    b.HasOne("ApiRestNetCore.Entidades.Categories", "Products")
-                        .WithMany()
+                    b.HasOne("ApiRestNetCore.Entidades.Product", "Product")
+                        .WithMany("ProductSeller")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Products");
+                    b.HasOne("ApiRestNetCore.Entidades.Seller", "Seller")
+                        .WithMany("ProductSellers")
+                        .HasForeignKey("SellerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("ApiRestNetCore.Entidades.ShoppingOrder", b =>
@@ -258,12 +278,19 @@ namespace ApiRestNetCore.Migrations
 
             modelBuilder.Entity("ApiRestNetCore.Entidades.TransactionReports", b =>
                 {
+                    b.HasOne("ApiRestNetCore.Entidades.ShoppingOrder", "ShoppingOrder")
+                        .WithMany("TransactionReports")
+                        .HasForeignKey("OrderId")
+                        .IsRequired();
+
                     b.HasOne("ApiRestNetCore.Entidades.Product", "Product")
                         .WithMany("TransactionReports")
                         .HasForeignKey("ProductId")
                         .IsRequired();
 
                     b.Navigation("Product");
+
+                    b.Navigation("ShoppingOrder");
                 });
 
             modelBuilder.Entity("ApiRestNetCore.Entidades.Categories", b =>
@@ -281,6 +308,18 @@ namespace ApiRestNetCore.Migrations
                 });
 
             modelBuilder.Entity("ApiRestNetCore.Entidades.Product", b =>
+                {
+                    b.Navigation("ProductSeller");
+
+                    b.Navigation("TransactionReports");
+                });
+
+            modelBuilder.Entity("ApiRestNetCore.Entidades.Seller", b =>
+                {
+                    b.Navigation("ProductSellers");
+                });
+
+            modelBuilder.Entity("ApiRestNetCore.Entidades.ShoppingOrder", b =>
                 {
                     b.Navigation("TransactionReports");
                 });

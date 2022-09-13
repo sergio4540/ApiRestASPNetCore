@@ -39,6 +39,19 @@ namespace ApiRestNetCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Seller",
+                columns: table => new
+                {
+                    SellerId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Seller", x => x.SellerId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Product",
                 columns: table => new
                 {
@@ -53,26 +66,6 @@ namespace ApiRestNetCore.Migrations
                     table.ForeignKey(
                         name: "FK_Product_Categories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Seller",
-                columns: table => new
-                {
-                    SellerId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Seller", x => x.SellerId);
-                    table.ForeignKey(
-                        name: "FK_Seller_Categories_ProductId",
-                        column: x => x.ProductId,
                         principalTable: "Categories",
                         principalColumn: "CategoryId",
                         onDelete: ReferentialAction.Cascade);
@@ -139,6 +132,28 @@ namespace ApiRestNetCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProductSeller",
+                columns: table => new
+                {
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    SellerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductSeller", x => new { x.ProductId, x.SellerId });
+                    table.ForeignKey(
+                        name: "FK_ProductSeller_Product_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Product",
+                        principalColumn: "ProductId");
+                    table.ForeignKey(
+                        name: "FK_ProductSeller_Seller_SellerId",
+                        column: x => x.SellerId,
+                        principalTable: "Seller",
+                        principalColumn: "SellerId");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TransactionReports",
                 columns: table => new
                 {
@@ -155,6 +170,11 @@ namespace ApiRestNetCore.Migrations
                         column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "ProductId");
+                    table.ForeignKey(
+                        name: "FK_TransactionReports_ShoppingOrder_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "ShoppingOrder",
+                        principalColumn: "OrderId");
                 });
 
             migrationBuilder.CreateIndex(
@@ -173,14 +193,19 @@ namespace ApiRestNetCore.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Seller_ProductId",
-                table: "Seller",
-                column: "ProductId");
+                name: "IX_ProductSeller_SellerId",
+                table: "ProductSeller",
+                column: "SellerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingOrder_CustomerId",
                 table: "ShoppingOrder",
                 column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TransactionReports_OrderId",
+                table: "TransactionReports",
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransactionReports_ProductId",
@@ -197,22 +222,25 @@ namespace ApiRestNetCore.Migrations
                 name: "Payment");
 
             migrationBuilder.DropTable(
-                name: "Seller");
-
-            migrationBuilder.DropTable(
-                name: "ShoppingOrder");
+                name: "ProductSeller");
 
             migrationBuilder.DropTable(
                 name: "TransactionReports");
 
             migrationBuilder.DropTable(
-                name: "Customer");
+                name: "Seller");
 
             migrationBuilder.DropTable(
                 name: "Product");
 
             migrationBuilder.DropTable(
+                name: "ShoppingOrder");
+
+            migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Customer");
         }
     }
 }

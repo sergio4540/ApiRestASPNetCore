@@ -134,6 +134,21 @@ namespace ApiRestNetCore.Migrations
                     b.ToTable("Product");
                 });
 
+            modelBuilder.Entity("ApiRestNetCore.Entidades.ProductSeller", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SellerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "SellerId");
+
+                    b.HasIndex("SellerId");
+
+                    b.ToTable("ProductSeller");
+                });
+
             modelBuilder.Entity("ApiRestNetCore.Entidades.Seller", b =>
                 {
                     b.Property<int>("SellerId")
@@ -146,12 +161,7 @@ namespace ApiRestNetCore.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
                     b.HasKey("SellerId");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("Seller");
                 });
@@ -234,15 +244,23 @@ namespace ApiRestNetCore.Migrations
                     b.Navigation("Categories");
                 });
 
-            modelBuilder.Entity("ApiRestNetCore.Entidades.Seller", b =>
+            modelBuilder.Entity("ApiRestNetCore.Entidades.ProductSeller", b =>
                 {
-                    b.HasOne("ApiRestNetCore.Entidades.Categories", "Products")
-                        .WithMany()
+                    b.HasOne("ApiRestNetCore.Entidades.Product", "Product")
+                        .WithMany("ProductSeller")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Products");
+                    b.HasOne("ApiRestNetCore.Entidades.Seller", "Seller")
+                        .WithMany("ProductSellers")
+                        .HasForeignKey("SellerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("ApiRestNetCore.Entidades.ShoppingOrder", b =>
@@ -289,7 +307,14 @@ namespace ApiRestNetCore.Migrations
 
             modelBuilder.Entity("ApiRestNetCore.Entidades.Product", b =>
                 {
+                    b.Navigation("ProductSeller");
+
                     b.Navigation("TransactionReports");
+                });
+
+            modelBuilder.Entity("ApiRestNetCore.Entidades.Seller", b =>
+                {
+                    b.Navigation("ProductSellers");
                 });
 
             modelBuilder.Entity("ApiRestNetCore.Entidades.ShoppingOrder", b =>

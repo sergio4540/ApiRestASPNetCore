@@ -17,5 +17,6 @@ namespace ApiRestNetCore.Entidades
         public Categories ?Categories { get; set; }
 
         public ICollection<TransactionReports>? TransactionReports { get; set; }
+        public ICollection<ProductSeller>? ProductSeller { get; set; }
     }
 }

@@ -36,7 +36,8 @@ namespace ApiRestNetCore.Helpers
             CreateMap<TransactionReports, TransactionReportsDTO>().ReverseMap();
             CreateMap<TransactionReportsCreacionDTO, TransactionReports>();
 
-
+            CreateMap<ProductSeller, ProductSellerDTO>().ReverseMap();
+            CreateMap<ProductSellerCreacionDTO, ProductSeller>();
         }
 
 

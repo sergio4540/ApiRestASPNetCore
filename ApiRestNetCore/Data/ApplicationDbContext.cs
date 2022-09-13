@@ -66,6 +66,24 @@ namespace ApiRestNetCore.Data
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
+
+            modelBuilder.Entity<ProductSeller>(entity =>
+            {
+                entity
+                .HasKey(x => new { x.ProductId, x.SellerId });
+
+                entity.HasOne(d => d.Product)
+                .WithMany(p => p.ProductSeller)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasOne(d => d.Seller)
+                .WithMany(p => p.ProductSellers)
+                .HasForeignKey(d => d.SellerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            });             
+               
         }
 
 
@@ -77,5 +95,6 @@ namespace ApiRestNetCore.Data
         public DbSet<ShoppingOrder> ShoppingOrder { get; set; }
         public DbSet<Deliveries> Deliveries { get; set; }
         public DbSet<TransactionReports> TransactionReports { get; set; }
+        public DbSet<ProductSeller> ProductSeller { get; set; }
     }
 }
