@@ -178,6 +178,29 @@ namespace ApiRestNetCore.Migrations
                     b.ToTable("ShoppingOrder");
                 });
 
+            modelBuilder.Entity("ApiRestNetCore.Entidades.TransactionReports", b =>
+                {
+                    b.Property<int>("TransactionReportId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionReportId"), 1L, 1);
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TransactionReportId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("TransactionReports");
+                });
+
             modelBuilder.Entity("ApiRestNetCore.Entidades.Deliveries", b =>
                 {
                     b.HasOne("ApiRestNetCore.Entidades.Customer", "Customer")
@@ -233,6 +256,23 @@ namespace ApiRestNetCore.Migrations
                     b.Navigation("Customer");
                 });
 
+            modelBuilder.Entity("ApiRestNetCore.Entidades.TransactionReports", b =>
+                {
+                    b.HasOne("ApiRestNetCore.Entidades.ShoppingOrder", "ShoppingOrder")
+                        .WithMany("TransactionReports")
+                        .HasForeignKey("OrderId")
+                        .IsRequired();
+
+                    b.HasOne("ApiRestNetCore.Entidades.Product", "Product")
+                        .WithMany("TransactionReports")
+                        .HasForeignKey("ProductId")
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("ShoppingOrder");
+                });
+
             modelBuilder.Entity("ApiRestNetCore.Entidades.Categories", b =>
                 {
                     b.Navigation("Product");
@@ -245,6 +285,16 @@ namespace ApiRestNetCore.Migrations
                     b.Navigation("Payments");
 
                     b.Navigation("ShoppingOrders");
+                });
+
+            modelBuilder.Entity("ApiRestNetCore.Entidades.Product", b =>
+                {
+                    b.Navigation("TransactionReports");
+                });
+
+            modelBuilder.Entity("ApiRestNetCore.Entidades.ShoppingOrder", b =>
+                {
+                    b.Navigation("TransactionReports");
                 });
 #pragma warning restore 612, 618
         }

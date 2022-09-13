@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ApiRestNetCore.Migrations
 {
-    public partial class primera : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -36,20 +36,6 @@ namespace ApiRestNetCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customer", x => x.CustomerId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Payment",
-                columns: table => new
-                {
-                    PaymentId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Payment", x => x.PaymentId);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,6 +99,26 @@ namespace ApiRestNetCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Payment",
+                columns: table => new
+                {
+                    PaymentId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClienteId = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payment", x => x.PaymentId);
+                    table.ForeignKey(
+                        name: "FK_Payment_Customer_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Customer",
+                        principalColumn: "CustomerId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ShoppingOrder",
                 columns: table => new
                 {
@@ -132,10 +138,34 @@ namespace ApiRestNetCore.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "TransactionReports",
+                columns: table => new
+                {
+                    TransactionReportId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TransactionReports", x => x.TransactionReportId);
+                    table.ForeignKey(
+                        name: "FK_TransactionReports_Product_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Product",
+                        principalColumn: "ProductId");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Deliveries_CustomerId",
                 table: "Deliveries",
                 column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payment_ClienteId",
+                table: "Payment",
+                column: "ClienteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Product_CategoryId",
@@ -151,6 +181,11 @@ namespace ApiRestNetCore.Migrations
                 name: "IX_ShoppingOrder_CustomerId",
                 table: "ShoppingOrder",
                 column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TransactionReports_ProductId",
+                table: "TransactionReports",
+                column: "ProductId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -162,19 +197,22 @@ namespace ApiRestNetCore.Migrations
                 name: "Payment");
 
             migrationBuilder.DropTable(
-                name: "Product");
-
-            migrationBuilder.DropTable(
                 name: "Seller");
 
             migrationBuilder.DropTable(
                 name: "ShoppingOrder");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "TransactionReports");
 
             migrationBuilder.DropTable(
                 name: "Customer");
+
+            migrationBuilder.DropTable(
+                name: "Product");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }

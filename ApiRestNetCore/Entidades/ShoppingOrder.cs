@@ -15,5 +15,7 @@ namespace ApiRestNetCore.Entidades
         // PROPIEDAD DE NAVEGACIÓN
         [ForeignKey("CustomerId")]
         public Customer ?Customer { get; set; }
+
+        public ICollection<TransactionReports>? TransactionReports { get; set; }
     }
 }
