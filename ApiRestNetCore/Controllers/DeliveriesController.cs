@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ApiRestNetCore.Controllers
 {
     [ApiController]
-    [Route("api/categories")]
+    [Route("api/deliveries")]
     public class DeliveriesController : Controller
     {
         private readonly ILogger<DeliveriesController> logger;
