@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ApiRestNetCore.Entidades;
+using System.ComponentModel.DataAnnotations;
 
 namespace ApiRestNetCore.DTOs
 {

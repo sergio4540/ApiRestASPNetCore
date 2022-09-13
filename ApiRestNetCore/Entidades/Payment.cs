@@ -10,6 +10,5 @@ namespace ApiRestNetCore.Entidades
 
         public int CategoryId { get; set; }
         public DateTime Date { get; set; }
-        public ICollection<TransactionReports>? TransactionReports { get; set; }
     }
 }

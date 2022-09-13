@@ -6,11 +6,12 @@ namespace ApiRestNetCore.DTOs
 {
     public class ProductCreacionDTO
     {
-        public int CategotyId { get; set; }
+        public int CategoryId { get; set; }
         [StringLength(50)]
         public string? ProductName { get; set; }
+
         // PROPIEDAD DE NAVEGACIÓN
         [ForeignKey("CategoryId")]
-        public Categories ?Categories { get; set; }
+        public Categories? Categories { get; set; }
     }
 }

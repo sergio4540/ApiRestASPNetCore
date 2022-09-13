@@ -1,4 +1,7 @@
-﻿namespace ApiRestNetCore.DTOs
+﻿using ApiRestNetCore.Entidades;
+using System.ComponentModel.DataAnnotations;
+
+namespace ApiRestNetCore.DTOs
 {
     public class PaymentCreacionDTO
     {

@@ -42,30 +42,6 @@ namespace ApiRestNetCore.Data
                     .WithMany(p => p.ShoppingOrders)
                     .HasForeignKey(d => d.CustomerId);
             });
-
-            modelBuilder.Entity<ProductSeller>()
-                .HasKey(x => new { x.ProductId, x.SellerId });
-
-            modelBuilder.Entity<TransactionReports>(entity =>
-            {
-
-                // Definición de la clave foránea
-                entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.TransactionReports)
-                    .HasForeignKey(d => d.CustomerId);
-
-                entity.HasOne(d => d.ShoppingOrder)
-                    .WithMany(p => p.TransactionReports)
-                    .HasForeignKey(d => d.OrderId);
-
-                entity.HasOne(d => d.Product)
-                    .WithMany(p => p.TransactionReports)
-                    .HasForeignKey(d => d.ProductId);
-
-                entity.HasOne(d => d.Payment)
-                    .WithMany(p => p.TransactionReports)
-                    .HasForeignKey(d => d.PaymentId);
-            });
         }
 
 
@@ -76,6 +52,5 @@ namespace ApiRestNetCore.Data
         public DbSet<Payment> Payment { get; set; }
         public DbSet<ShoppingOrder> ShoppingOrder { get; set; }
         public DbSet<Deliveries> Deliveries { get; set; }
-        public DbSet<TransactionReports> TransactionReports { get; set; }
     }
 }

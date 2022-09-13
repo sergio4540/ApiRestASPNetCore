@@ -15,6 +15,5 @@ namespace ApiRestNetCore.Entidades
         // PROPIEDAD DE NAVEGACIÓN
         [ForeignKey("CategoryId")]
         public Categories ?Categories { get; set; }
-        public ICollection<TransactionReports>? TransactionReports { get; set; }
     }
 }

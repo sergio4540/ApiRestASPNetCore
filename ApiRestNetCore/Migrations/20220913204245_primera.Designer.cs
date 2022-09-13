@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiRestNetCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220913180249_third")]
-    partial class third
+    [Migration("20220913204245_primera")]
+    partial class primera
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -134,21 +134,6 @@ namespace ApiRestNetCore.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("ApiRestNetCore.Entidades.ProductSeller", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SellerId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductId", "SellerId");
-
-                    b.HasIndex("SellerId");
-
-                    b.ToTable("ProductSeller");
-                });
-
             modelBuilder.Entity("ApiRestNetCore.Entidades.Seller", b =>
                 {
                     b.Property<int>("SellerId")
@@ -193,39 +178,6 @@ namespace ApiRestNetCore.Migrations
                     b.ToTable("ShoppingOrder");
                 });
 
-            modelBuilder.Entity("ApiRestNetCore.Entidades.TransactionReports", b =>
-                {
-                    b.Property<int>("ReportId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportId"), 1L, 1);
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PaymentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ReportId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("PaymentId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("TransactionReports");
-                });
-
             modelBuilder.Entity("ApiRestNetCore.Entidades.Deliveries", b =>
                 {
                     b.HasOne("ApiRestNetCore.Entidades.Customer", "Customer")
@@ -246,25 +198,6 @@ namespace ApiRestNetCore.Migrations
                         .IsRequired();
 
                     b.Navigation("Categories");
-                });
-
-            modelBuilder.Entity("ApiRestNetCore.Entidades.ProductSeller", b =>
-                {
-                    b.HasOne("ApiRestNetCore.Entidades.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ApiRestNetCore.Entidades.Seller", "Seller")
-                        .WithMany()
-                        .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("ApiRestNetCore.Entidades.Seller", b =>
@@ -289,41 +222,6 @@ namespace ApiRestNetCore.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("ApiRestNetCore.Entidades.TransactionReports", b =>
-                {
-                    b.HasOne("ApiRestNetCore.Entidades.Customer", "Customer")
-                        .WithMany("TransactionReports")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ApiRestNetCore.Entidades.ShoppingOrder", "ShoppingOrder")
-                        .WithMany("TransactionReports")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ApiRestNetCore.Entidades.Payment", "Payment")
-                        .WithMany("TransactionReports")
-                        .HasForeignKey("PaymentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ApiRestNetCore.Entidades.Product", "Product")
-                        .WithMany("TransactionReports")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Payment");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("ShoppingOrder");
-                });
-
             modelBuilder.Entity("ApiRestNetCore.Entidades.Categories", b =>
                 {
                     b.Navigation("Product");
@@ -334,23 +232,6 @@ namespace ApiRestNetCore.Migrations
                     b.Navigation("Deliveries");
 
                     b.Navigation("ShoppingOrders");
-
-                    b.Navigation("TransactionReports");
-                });
-
-            modelBuilder.Entity("ApiRestNetCore.Entidades.Payment", b =>
-                {
-                    b.Navigation("TransactionReports");
-                });
-
-            modelBuilder.Entity("ApiRestNetCore.Entidades.Product", b =>
-                {
-                    b.Navigation("TransactionReports");
-                });
-
-            modelBuilder.Entity("ApiRestNetCore.Entidades.ShoppingOrder", b =>
-                {
-                    b.Navigation("TransactionReports");
                 });
 #pragma warning restore 612, 618
         }
