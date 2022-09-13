@@ -42,6 +42,15 @@ namespace ApiRestNetCore.Data
                     .WithMany(p => p.ShoppingOrders)
                     .HasForeignKey(d => d.CustomerId);
             });
+
+            modelBuilder.Entity<Payment>(entity =>
+            {
+
+                // Definición de la clave foránea
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.Payments)
+                    .HasForeignKey(d => d.ClienteId);
+            });
         }
 
 

@@ -19,5 +19,6 @@ namespace ApiRestNetCore.Entidades
         // PROPIEDAD DE NAVEGACIÓN
         public ICollection<Deliveries> ?Deliveries { get; set; }
         public ICollection<ShoppingOrder> ?ShoppingOrders { get; set; }
+        public ICollection<Payment>? Payments { get; set; }
     }
 }
