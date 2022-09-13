@@ -32,6 +32,10 @@ namespace ApiRestNetCore.Data
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<Categories> Categories { get; set; }
-
+        public DbSet<Seller> Seller { get; set; }
+        public DbSet<Payment> Payment { get; set; }
+        public DbSet<ShoppingOrder> ShoppingOrder { get; set; }
+        public DbSet<Deliveries> Deliveries { get; set; }
+        public DbSet<TransactionReports> TransactionReports { get; set; }
     }
 }
