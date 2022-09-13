@@ -13,9 +13,10 @@ namespace ApiRestNetCore.Helpers
 
           
             CreateMap<Customer,CustomerDTO >().ReverseMap();
-
-
             CreateMap<CustomerCreacionDTO, Customer>();
+
+            CreateMap<Product, ProductDTO>().ReverseMap();
+            CreateMap<ProductCreacionDTO, Product>();
 
 
 
