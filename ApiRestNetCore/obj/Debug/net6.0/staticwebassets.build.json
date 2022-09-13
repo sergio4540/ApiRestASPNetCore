@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "hWUfJH+e+JJ6YEDUsyAaWPO37hicMaCYUw3vNdRe33g=",
+  "Source": "ApiRestNetCore",
+  "BasePath": "_content/ApiRestNetCore",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
