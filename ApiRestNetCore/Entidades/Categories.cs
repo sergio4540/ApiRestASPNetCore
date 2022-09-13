@@ -15,6 +15,6 @@ namespace ApiRestNetCore.Entidades
         public string? CategoryType { get; set; }
 
         // PROPIEDAD DE NAVEGACIÓN
-        public ICollection<Product> Product { get; set; }
+        public ICollection<Product> ?Product { get; set; }
     }
 }

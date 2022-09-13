@@ -14,6 +14,6 @@ namespace ApiRestNetCore.Entidades
 
         // PROPIEDAD DE NAVEGACIÓN
         [ForeignKey("ProductId")]
-        public Categories Products { get; set; }
+        public Categories ?Products { get; set; }
     }
 }

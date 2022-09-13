@@ -15,5 +15,10 @@ namespace ApiRestNetCore.Entidades
         public string ?ContactAdd { get; set; }
         [StringLength(50)]
         public string ?Address { get; set; }
+
+        // PROPIEDAD DE NAVEGACIÓN
+        public ICollection<Deliveries> ?Deliveries { get; set; }
+        public ICollection<ShoppingOrder> ?ShoppingOrders { get; set; }
+        public ICollection<TransactionReports>? TransactionReports { get; set; }
     }
 }

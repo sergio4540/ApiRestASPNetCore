@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApiRestNetCore.Entidades
 {
@@ -8,5 +9,9 @@ namespace ApiRestNetCore.Entidades
         public int DeliveriesId { get; set; }
         public int CustomerId { get; set; }
         public DateTime Date { get; set; }
+
+        // PROPIEDAD DE NAVEGACIÓN
+        [ForeignKey("CustomerId")]
+        public Customer ?Customer { get; set; }
     }
 }
