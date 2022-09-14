@@ -5,6 +5,7 @@ using ApiRestNetCore.Controllers;
 using ApiRestNetCore.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ApiRestNetCore.Servicios;
 
 namespace ApiRestNetCore.Controllers
 {
@@ -15,12 +16,16 @@ namespace ApiRestNetCore.Controllers
         private readonly ILogger<CustomerController> logger;
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
+        private readonly IAlmacenadorArchivos almacenadorArchivos;
+        private readonly string contenedor = "Files";
 
-        public CustomerController(ILogger<CustomerController> logger, ApplicationDbContext context, IMapper mapper)
+        public CustomerController(ILogger<CustomerController> logger, ApplicationDbContext context, IMapper mapper,
+             IAlmacenadorArchivos almacenadorArchivos)
         {
             this.logger = logger;
             this.context = context;
             this.mapper = mapper;
+            this.almacenadorArchivos = almacenadorArchivos;
         }
 
 
@@ -57,14 +62,25 @@ namespace ApiRestNetCore.Controllers
 
         [HttpPost]
 
-        public async Task<ActionResult> Post([FromBody] CustomerCreacionDTO customerCreacionDTO)
+        public async Task<ActionResult> Post([FromForm] CustomerCreacionDTO customerCreacionDTO)
         {
 
+            var archivos = mapper.Map<Customer>(customerCreacionDTO);
 
-            var customer = mapper.Map<Customer>(customerCreacionDTO);
-            context.Add(customer);
+            if (customerCreacionDTO.Foto != null)
+            {
+
+                archivos.Foto = await almacenadorArchivos.GuardarArchivo(contenedor, customerCreacionDTO.Foto);
+
+            }
+
+
+            context.Add(archivos);
             await context.SaveChangesAsync();
-            return NoContent(); //204
+
+            return NoContent();
+
+
 
 
         }

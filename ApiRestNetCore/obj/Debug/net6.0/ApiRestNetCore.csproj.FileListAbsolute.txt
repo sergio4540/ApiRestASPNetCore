@@ -61,3 +61,4 @@ C:\Users\user\Desktop\ApiRest\ApiRestNetCore\ApiRestNetCore\obj\Debug\net6.0\ref
 C:\Users\user\Desktop\ApiRest\ApiRestNetCore\ApiRestNetCore\obj\Debug\net6.0\ApiRestNetCore.pdb
 C:\Users\user\Desktop\ApiRest\ApiRestNetCore\ApiRestNetCore\obj\Debug\net6.0\ApiRestNetCore.genruntimeconfig.cache
 C:\Users\user\Desktop\ApiRest\ApiRestNetCore\ApiRestNetCore\obj\Debug\net6.0\ref\ApiRestNetCore.dll
+C:\Users\user\Desktop\ApiRest\ApiRestNetCore\ApiRestNetCore\bin\Debug\net6.0\ApiRestNetCore.staticwebassets.runtime.json

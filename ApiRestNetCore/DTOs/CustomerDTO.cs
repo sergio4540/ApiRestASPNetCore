@@ -17,6 +17,7 @@ namespace ApiRestNetCore.DTOs
         public string? ContactAdd { get; set; }
         [StringLength(50)]
         public string? Address { get; set; }
+        public string Foto { get; set; }
 
         // PROPIEDAD DE NAVEGACIÓN
         public ICollection<Deliveries>? Deliveries { get; set; }
